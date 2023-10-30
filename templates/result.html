@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iris Flower Prediction (CSV) - Result</title>
+    <link rel="stylesheet" href="https://unpkg.com/sheetjs/dist/sheetjs.css">
+    <script src="https://unpkg.com/sheetjs/dist/sheetjs.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://unpkg.com/sheetjs/dist/sheetjs.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 45%; /* Adjust the width as needed */
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            width: 100px;  /* Adjust the width as needed */
+            height: auto;
+            margin-left: 20px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px;
+        }
+    </style>
+    <script>
+        function downloadExcel() {
+            const table = document.getElementById('resultTable');
+            const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet1' });
+            XLSX.writeFile(wb, 'result.xlsx');
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <h1>Iris Flower Prediction (CSV) - Result</h1>
+
+        <table id="resultTable">
+            <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Sepal Length</th>
+                    <th>Sepal Width</th>
+                    <th>Petal Length</th>
+                    <th>Petal Width</th>
+                    <th>Prediction</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td>{{ row[4] }}</td>
+                        <td>{{ row[5] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <button onclick="downloadExcel()">Download Excel</button>
+    </div>
+
+    <div>
+        <img src="{{ url_for('static', filename='setosa.jpg') }}" alt="Setosa Flower">
+        <img src="{{ url_for('static', filename='versicolor.jpg') }}" alt="Versicolor Flower">
+        <img src="{{ url_for('static', filename='virginica.jpg') }}" alt="Virginica Flower">
+    </div>
+</body>
+</html>
